@@ -1,0 +1,8 @@
+﻿  CalculatorForm.cpp
+C:\Users\Harithz\source\repos\GUICalculator\GUICalculator\CalculatorForm.h(52,22): warning C4101: 'err': unreferenced local variable
+C:\Users\Harithz\source\repos\GUICalculator\GUICalculator\CalculatorForm.h(75,22): warning C4101: 'err': unreferenced local variable
+C:\Users\Harithz\source\repos\GUICalculator\GUICalculator\CalculatorForm.h(392,20): warning C4101: 'err': unreferenced local variable
+C:\Users\Harithz\source\repos\GUICalculator\GUICalculator\CalculatorForm.h(414,20): warning C4101: 'err': unreferenced local variable
+C:\Users\Harithz\source\repos\GUICalculator\GUICalculator\CalculatorForm.h(436,20): warning C4101: 'err': unreferenced local variable
+  CalculatorForm.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  GUICalculator.vcxproj -> C:\Users\Harithz\source\repos\GUICalculator\Debug\GUICalculator.exe

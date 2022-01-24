@@ -1,0 +1,3 @@
+C:\Users\Harithz\source\repos\GUICalculator\GUICalculator\Debug\GUICalculator.CalculatorForm.resources
+C:\Users\Harithz\source\repos\GUICalculator\GUICalculator\Debug\GUICalculator.vcxproj.GenerateResource.cache
+C:\Users\Harithz\source\repos\GUICalculator\GUICalculator\Debug\GUICalculator.vcxproj.AssemblyReference.cache
