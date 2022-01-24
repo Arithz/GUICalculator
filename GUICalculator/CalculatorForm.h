@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <cmath>
+#include <string>
 
 namespace GUICalculator {
 
@@ -39,18 +40,12 @@ namespace GUICalculator {
 
 		//functions to get the input and convert it for PART C
 		double convertpartA(int arithmetic) {
-			String^ number1 = Number1->Text;
-			String^ number2 = Number2->Text;
+			String^ number1 = atbox1->Text;
+			String^ number2 = atbox2->Text;
 
 			Double number1dbl, number2dbl;
-
-			try {
-				number1dbl = Convert::ToDouble(number1);
-				number2dbl = Convert::ToDouble(number2);
-			}
-			catch (Exception^ err) {
-				return 0;
-			}
+			number1dbl = Convert::ToDouble(number1);
+			number2dbl = Convert::ToDouble(number2);
 			
 			double result;
 			if (arithmetic == 1) result = number1dbl + number2dbl;
@@ -61,18 +56,14 @@ namespace GUICalculator {
 			return result;
 		}
 
+
 		//functions to get the input and convert it for PART C
 		double convertpartC(int power) {
+
 			String^ number1 = ctbox1->Text;
 
 			Double number1dbl;
-
-			try {
-				number1dbl = Convert::ToDouble(number1);
-			}
-			catch (Exception^ err) {
-				return 0;
-			}
+			number1dbl = Convert::ToDouble(number1);
 			
 			return pow(number1dbl, power);
 		}
@@ -82,10 +73,12 @@ namespace GUICalculator {
 	private: System::Windows::Forms::Label^ ResultLabel;
 	private: System::Windows::Forms::Button^ minusbutton;
 	private: System::Windows::Forms::Button^ plusbutton;
-	private: System::Windows::Forms::TextBox^ Number2;
+	private: System::Windows::Forms::TextBox^ atbox2;
+
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::TextBox^ Number1;
+	private: System::Windows::Forms::TextBox^ atbox1;
+
 	private: System::Windows::Forms::Button^ dividebutton;
 	private: System::Windows::Forms::Button^ multiplybutton;
 	private: System::Windows::Forms::TabPage^ tabPage2;
@@ -102,16 +95,6 @@ namespace GUICalculator {
 
 
 	protected:
-
-
-
-
-
-
-
-
-
-
 
 	private:
 		/// <summary>
@@ -133,10 +116,10 @@ namespace GUICalculator {
 			this->ResultLabel = (gcnew System::Windows::Forms::Label());
 			this->minusbutton = (gcnew System::Windows::Forms::Button());
 			this->plusbutton = (gcnew System::Windows::Forms::Button());
-			this->Number2 = (gcnew System::Windows::Forms::TextBox());
+			this->atbox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->Number1 = (gcnew System::Windows::Forms::TextBox());
+			this->atbox1 = (gcnew System::Windows::Forms::TextBox());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
 			this->power5 = (gcnew System::Windows::Forms::Button());
@@ -170,10 +153,10 @@ namespace GUICalculator {
 			this->tabPage1->Controls->Add(this->ResultLabel);
 			this->tabPage1->Controls->Add(this->minusbutton);
 			this->tabPage1->Controls->Add(this->plusbutton);
-			this->tabPage1->Controls->Add(this->Number2);
+			this->tabPage1->Controls->Add(this->atbox2);
 			this->tabPage1->Controls->Add(this->label2);
 			this->tabPage1->Controls->Add(this->label1);
-			this->tabPage1->Controls->Add(this->Number1);
+			this->tabPage1->Controls->Add(this->atbox1);
 			this->tabPage1->Location = System::Drawing::Point(4, 22);
 			this->tabPage1->Name = L"tabPage1";
 			this->tabPage1->Padding = System::Windows::Forms::Padding(3);
@@ -239,12 +222,12 @@ namespace GUICalculator {
 			this->plusbutton->UseVisualStyleBackColor = true;
 			this->plusbutton->Click += gcnew System::EventHandler(this, &CalculatorForm::plusbutton_Click);
 			// 
-			// Number2
+			// atbox2
 			// 
-			this->Number2->Location = System::Drawing::Point(22, 82);
-			this->Number2->Name = L"Number2";
-			this->Number2->Size = System::Drawing::Size(230, 20);
-			this->Number2->TabIndex = 3;
+			this->atbox2->Location = System::Drawing::Point(22, 82);
+			this->atbox2->Name = L"atbox2";
+			this->atbox2->Size = System::Drawing::Size(230, 20);
+			this->atbox2->TabIndex = 3;
 			// 
 			// label2
 			// 
@@ -264,12 +247,12 @@ namespace GUICalculator {
 			this->label1->TabIndex = 1;
 			this->label1->Text = L"Number 1:";
 			// 
-			// Number1
+			// atbox1
 			// 
-			this->Number1->Location = System::Drawing::Point(22, 28);
-			this->Number1->Name = L"Number1";
-			this->Number1->Size = System::Drawing::Size(230, 20);
-			this->Number1->TabIndex = 0;
+			this->atbox1->Location = System::Drawing::Point(22, 28);
+			this->atbox1->Name = L"atbox1";
+			this->atbox1->Size = System::Drawing::Size(230, 20);
+			this->atbox1->TabIndex = 0;
 			// 
 			// tabPage2
 			// 
@@ -350,7 +333,6 @@ namespace GUICalculator {
 			this->label4->Size = System::Drawing::Size(56, 13);
 			this->label4->TabIndex = 5;
 			this->label4->Text = L"Number 1:";
-			this->label4->Click += gcnew System::EventHandler(this, &CalculatorForm::label4_Click);
 			// 
 			// ctbox1
 			// 
@@ -391,78 +373,121 @@ namespace GUICalculator {
 
 //function for plus button 
 private: System::Void plusbutton_Click(System::Object^ sender, System::EventArgs^ e) {
-	Double ResultDbl = convertpartA(1);
+	double number1, number2;
+	if (double::TryParse(atbox1->Text, number1) && double::TryParse(atbox2->Text, number2))
+	{
+		Double ResultDbl = convertpartA(1);
 
-	String^ ResultStr;
-	if (ResultDbl == 0) ResultStr = "Please give a valid value";
-	else ResultStr = Convert::ToString(ResultDbl);
-	ResultLabel->Text = "Result: " + ResultStr;
+		String^ ResultStr;
+		ResultStr = Convert::ToString(ResultDbl);
+		ResultLabel->Text = "Result: " + ResultStr;
+	}
+	else
+	{
+		ResultLabel->Text = "Result: " + "Please give a valid value";
+	}
 }
 
 
 //function for minus button 
 private: System::Void minusbutton_Click(System::Object^ sender, System::EventArgs^ e) {
-	Double ResultDbl = convertpartA(2);
+	double number1, number2;
+	if (double::TryParse(atbox1->Text, number1) && double::TryParse(atbox2->Text, number2))
+	{
+		Double ResultDbl = convertpartA(2);
 
-	String^ ResultStr;
-	if (ResultDbl == 0) ResultStr = "Please give a valid value";
-	else ResultStr = Convert::ToString(ResultDbl);
-	ResultLabel->Text = "Result: " + ResultStr;
+		String^ ResultStr;
+		ResultStr = Convert::ToString(ResultDbl);
+		ResultLabel->Text = "Result: " + ResultStr;
+	}
+	else
+	{
+		ResultLabel->Text = "Result: " + "Please give a valid value";
+	}
 }
 
 
 //function for multiply button 
 private: System::Void multiplybutton_Click(System::Object^ sender, System::EventArgs^ e) {
-	Double ResultDbl = convertpartA(3);
+	double number1, number2;
+	if (double::TryParse(atbox1->Text, number1) && double::TryParse(atbox2->Text, number2))
+	{
+		Double ResultDbl = convertpartA(3);
 
-	String^ ResultStr;
-	if (ResultDbl == 0) ResultStr = "Please give a valid value";
-	else ResultStr = Convert::ToString(ResultDbl);
-	ResultLabel->Text = "Result: " + ResultStr;
+		String^ ResultStr;
+		ResultStr = Convert::ToString(ResultDbl);
+		ResultLabel->Text = "Result: " + ResultStr;
+	}
+	else
+	{
+		ResultLabel->Text = "Result: " + "Please give a valid value";
+	}
 }
 
 //function for divide button 
 private: System::Void dividebutton_Click(System::Object^ sender, System::EventArgs^ e) {
-	Double ResultDbl = convertpartA(4);
+	double number1, number2;
+	if (double::TryParse(atbox1->Text, number1) && double::TryParse(atbox2->Text, number2))
+	{
+		Double ResultDbl = convertpartA(4);
 
-	String^ ResultStr;
-	if (ResultDbl == 0) ResultStr = "Please give a valid value";
-	else ResultStr = Convert::ToString(ResultDbl);
-	ResultLabel->Text = "Result: " + ResultStr;
+		String^ ResultStr;
+		ResultStr = Convert::ToString(ResultDbl);
+		ResultLabel->Text = "Result: " + ResultStr;
+	}
+	else
+	{
+		ResultLabel->Text = "Result: " + "Please give a valid value";
+	}
 }
 
 // FUNCTIONALITIES FOR PART B
 
 // FUNCTIONALITIES FOR PART C
-private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void label4_Click(System::Object^ sender, System::EventArgs^ e) {
-}
 private: System::Void power2_Click(System::Object^ sender, System::EventArgs^ e) {
+	double number1;
+	if (double::TryParse(ctbox1->Text, number1))
+	{
+		Double ResultDbl = convertpartC(2);
 
-	Double ResultDbl = convertpartC(2);
-
-	String^ ResultStr;
-	if (ResultDbl == 0) ResultStr = "Please give a valid value";
-	else ResultStr = Convert::ToString(ResultDbl);
-	cResultLabel->Text = "Result: " + ResultStr;
+		String^ ResultStr;
+		ResultStr = Convert::ToString(ResultDbl);
+		cResultLabel->Text = "Result: " + ResultStr;
+	}
+	else
+	{
+		cResultLabel->Text = "Result: " + "Please give a valid value";
+	}
 }
 private: System::Void power3_Click(System::Object^ sender, System::EventArgs^ e) {
+	double number1;
+	if (double::TryParse(ctbox1->Text, number1))
+	{
+		Double ResultDbl = convertpartC(3);
 
-	Double ResultDbl = convertpartC(3);
-
-	String^ ResultStr;
-	if (ResultDbl == 0) ResultStr = "Please give a valid value";
-	else ResultStr = Convert::ToString(ResultDbl);
-	cResultLabel->Text = "Result: " + ResultStr;
+		String^ ResultStr;
+		ResultStr = Convert::ToString(ResultDbl);
+		cResultLabel->Text = "Result: " + ResultStr;
+	}
+	else
+	{
+		cResultLabel->Text = "Result: " + "Please give a valid value";
+	}
 }
 private: System::Void power5_Click(System::Object^ sender, System::EventArgs^ e) {
-	Double ResultDbl = convertpartC(5);
+	double number1;
+	if (double::TryParse(ctbox1->Text, number1))
+	{
+		Double ResultDbl = convertpartC(5);
 
-	String^ ResultStr;
-	if (ResultDbl == 0) ResultStr = "Please give a valid value";
-	else ResultStr = Convert::ToString(ResultDbl);
-	cResultLabel->Text = "Result: " + ResultStr;
+		String^ ResultStr;
+		ResultStr = Convert::ToString(ResultDbl);
+		cResultLabel->Text = "Result: " + ResultStr;
+	}
+	else
+	{
+		cResultLabel->Text = "Result: " + "Please give a valid value";
+	}
 }
 };
 }
