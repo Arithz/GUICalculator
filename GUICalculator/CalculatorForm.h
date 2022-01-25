@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <complex>
 
 namespace GUICalculator {
 
@@ -38,7 +39,7 @@ namespace GUICalculator {
 			}
 		}
 
-		//functions to get the input and convert it for PART C
+		//functions to get the input and convert it for PART A
 		double convertpartA(int arithmetic) {
 			String^ number1 = atbox1->Text;
 			String^ number2 = atbox2->Text;
@@ -68,6 +69,24 @@ namespace GUICalculator {
 			return pow(number1dbl, power);
 		}
 
+		//functions to get the input and convert it for PART D
+		double convertpartD(int process) {
+			String^ number1 = dtbox1->Text;
+			String^ number2 = dtbox2->Text;
+
+			Double number1dbl, number2dbl;
+			number1dbl = Convert::ToDouble(number1);
+			number2dbl = Convert::ToDouble(number2);
+
+			std::complex<double>complexresult(number1dbl, number2dbl);
+
+			double result;
+			if (process == 1) result = arg(complexresult);
+			else if (process == 2) result = abs(complexresult);
+
+			return result;
+		}
+
 	private: System::Windows::Forms::TabControl^ tabControl1;
 	private: System::Windows::Forms::TabPage^ tabPage1;
 	private: System::Windows::Forms::Label^ ResultLabel;
@@ -92,6 +111,22 @@ namespace GUICalculator {
 	private: System::Windows::Forms::Button^ power2;
 	private: System::Windows::Forms::Label^ cResultLabel;
 	private: System::Windows::Forms::TabPage^ tabPage4;
+	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::TextBox^ dtbox1;
+	private: System::Windows::Forms::Label^ label5;
+	private: System::Windows::Forms::TextBox^ dtbox2;
+	private: System::Windows::Forms::Label^ dResultLabel;
+
+	private: System::Windows::Forms::Button^ calcarg;
+	private: System::Windows::Forms::Button^ calcconj;
+
+
+	private: System::Windows::Forms::Button^ calcmag;
+private: System::Windows::Forms::Button^ graphbutton;
+private: System::Windows::Forms::Label^ label6;
+
+
+
 
 
 	protected:
@@ -121,6 +156,8 @@ namespace GUICalculator {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->atbox1 = (gcnew System::Windows::Forms::TextBox());
 			this->tabPage2 = (gcnew System::Windows::Forms::TabPage());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->graphbutton = (gcnew System::Windows::Forms::Button());
 			this->tabPage3 = (gcnew System::Windows::Forms::TabPage());
 			this->power5 = (gcnew System::Windows::Forms::Button());
 			this->power3 = (gcnew System::Windows::Forms::Button());
@@ -129,9 +166,19 @@ namespace GUICalculator {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->ctbox1 = (gcnew System::Windows::Forms::TextBox());
 			this->tabPage4 = (gcnew System::Windows::Forms::TabPage());
+			this->calcarg = (gcnew System::Windows::Forms::Button());
+			this->calcconj = (gcnew System::Windows::Forms::Button());
+			this->calcmag = (gcnew System::Windows::Forms::Button());
+			this->dResultLabel = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->dtbox2 = (gcnew System::Windows::Forms::TextBox());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->dtbox1 = (gcnew System::Windows::Forms::TextBox());
 			this->tabControl1->SuspendLayout();
 			this->tabPage1->SuspendLayout();
+			this->tabPage2->SuspendLayout();
 			this->tabPage3->SuspendLayout();
+			this->tabPage4->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// tabControl1
@@ -256,6 +303,8 @@ namespace GUICalculator {
 			// 
 			// tabPage2
 			// 
+			this->tabPage2->Controls->Add(this->label6);
+			this->tabPage2->Controls->Add(this->graphbutton);
 			this->tabPage2->Location = System::Drawing::Point(4, 22);
 			this->tabPage2->Name = L"tabPage2";
 			this->tabPage2->Padding = System::Windows::Forms::Padding(3);
@@ -263,6 +312,25 @@ namespace GUICalculator {
 			this->tabPage2->TabIndex = 1;
 			this->tabPage2->Text = L"Part B";
 			this->tabPage2->UseVisualStyleBackColor = true;
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(63, 33);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(120, 13);
+			this->label6->TabIndex = 1;
+			this->label6->Text = L"Value X in degrees: 720";
+			// 
+			// graphbutton
+			// 
+			this->graphbutton->Location = System::Drawing::Point(43, 64);
+			this->graphbutton->Name = L"graphbutton";
+			this->graphbutton->Size = System::Drawing::Size(161, 92);
+			this->graphbutton->TabIndex = 0;
+			this->graphbutton->Text = L"Tabulate Data";
+			this->graphbutton->UseVisualStyleBackColor = true;
+			this->graphbutton->Click += gcnew System::EventHandler(this, &CalculatorForm::graphbutton_Click);
 			// 
 			// tabPage3
 			// 
@@ -343,6 +411,14 @@ namespace GUICalculator {
 			// 
 			// tabPage4
 			// 
+			this->tabPage4->Controls->Add(this->calcarg);
+			this->tabPage4->Controls->Add(this->calcconj);
+			this->tabPage4->Controls->Add(this->calcmag);
+			this->tabPage4->Controls->Add(this->dResultLabel);
+			this->tabPage4->Controls->Add(this->label5);
+			this->tabPage4->Controls->Add(this->dtbox2);
+			this->tabPage4->Controls->Add(this->label3);
+			this->tabPage4->Controls->Add(this->dtbox1);
 			this->tabPage4->Location = System::Drawing::Point(4, 22);
 			this->tabPage4->Name = L"tabPage4";
 			this->tabPage4->Padding = System::Windows::Forms::Padding(3);
@@ -350,6 +426,83 @@ namespace GUICalculator {
 			this->tabPage4->TabIndex = 3;
 			this->tabPage4->Text = L"Part D";
 			this->tabPage4->UseVisualStyleBackColor = true;
+			// 
+			// calcarg
+			// 
+			this->calcarg->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->calcarg->Location = System::Drawing::Point(22, 135);
+			this->calcarg->Name = L"calcarg";
+			this->calcarg->Size = System::Drawing::Size(230, 27);
+			this->calcarg->TabIndex = 12;
+			this->calcarg->Text = L"Calculate Argument";
+			this->calcarg->UseVisualStyleBackColor = true;
+			this->calcarg->Click += gcnew System::EventHandler(this, &CalculatorForm::calcarg_Click);
+			// 
+			// calcconj
+			// 
+			this->calcconj->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->calcconj->Location = System::Drawing::Point(22, 196);
+			this->calcconj->Name = L"calcconj";
+			this->calcconj->Size = System::Drawing::Size(230, 27);
+			this->calcconj->TabIndex = 11;
+			this->calcconj->Text = L"Calculate Conjugate";
+			this->calcconj->UseVisualStyleBackColor = true;
+			this->calcconj->Click += gcnew System::EventHandler(this, &CalculatorForm::calcconj_Click);
+			// 
+			// calcmag
+			// 
+			this->calcmag->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->calcmag->Location = System::Drawing::Point(22, 166);
+			this->calcmag->Name = L"calcmag";
+			this->calcmag->Size = System::Drawing::Size(230, 27);
+			this->calcmag->TabIndex = 10;
+			this->calcmag->Text = L"Calculate Magnitude";
+			this->calcmag->UseVisualStyleBackColor = true;
+			this->calcmag->Click += gcnew System::EventHandler(this, &CalculatorForm::calcmag_Click);
+			// 
+			// dResultLabel
+			// 
+			this->dResultLabel->AutoSize = true;
+			this->dResultLabel->Location = System::Drawing::Point(22, 108);
+			this->dResultLabel->Name = L"dResultLabel";
+			this->dResultLabel->Size = System::Drawing::Size(40, 13);
+			this->dResultLabel->TabIndex = 9;
+			this->dResultLabel->Text = L"Result:";
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(22, 61);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(56, 13);
+			this->label5->TabIndex = 8;
+			this->label5->Text = L"Number 2:";
+			// 
+			// dtbox2
+			// 
+			this->dtbox2->Location = System::Drawing::Point(22, 77);
+			this->dtbox2->Name = L"dtbox2";
+			this->dtbox2->Size = System::Drawing::Size(230, 20);
+			this->dtbox2->TabIndex = 7;
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(22, 12);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(56, 13);
+			this->label3->TabIndex = 6;
+			this->label3->Text = L"Number 1:";
+			// 
+			// dtbox1
+			// 
+			this->dtbox1->Location = System::Drawing::Point(22, 28);
+			this->dtbox1->Name = L"dtbox1";
+			this->dtbox1->Size = System::Drawing::Size(230, 20);
+			this->dtbox1->TabIndex = 5;
 			// 
 			// CalculatorForm
 			// 
@@ -362,8 +515,12 @@ namespace GUICalculator {
 			this->tabControl1->ResumeLayout(false);
 			this->tabPage1->ResumeLayout(false);
 			this->tabPage1->PerformLayout();
+			this->tabPage2->ResumeLayout(false);
+			this->tabPage2->PerformLayout();
 			this->tabPage3->ResumeLayout(false);
 			this->tabPage3->PerformLayout();
+			this->tabPage4->ResumeLayout(false);
+			this->tabPage4->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
@@ -442,6 +599,22 @@ private: System::Void dividebutton_Click(System::Object^ sender, System::EventAr
 }
 
 // FUNCTIONALITIES FOR PART B
+private: System::Void graphbutton_Click(System::Object^ sender, System::EventArgs^ e) {
+	FILE* plotfile = fopen("PlotFile.txt", "w");
+
+	double xRad, y;
+
+	for (double x = -720; x <= 720; x += 0.1)
+	{
+		xRad = (x / 180) * Math::PI;
+		y = Math::Sin(xRad)/xRad;
+
+		fprintf(plotfile, " %f %f\n", x, y);
+
+	}
+	fclose(plotfile);
+
+}
 
 // FUNCTIONALITIES FOR PART C
 private: System::Void power2_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -488,6 +661,39 @@ private: System::Void power5_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		cResultLabel->Text = "Result: " + "Please give a valid value";
 	}
+}
+private: System::Void calcarg_Click(System::Object^ sender, System::EventArgs^ e) {
+	double number1,number2;
+	if (double::TryParse(dtbox1->Text, number1) && double::TryParse(dtbox2->Text, number2))
+	{
+		Double ResultDbl = convertpartD(1);
+
+		String^ ResultStr;
+		ResultStr = Convert::ToString(ResultDbl);
+		dResultLabel->Text = "Result: " + ResultStr;
+	}
+	else
+	{
+		dResultLabel->Text = "Result: " + "Please give a valid value";
+	}
+}
+private: System::Void calcmag_Click(System::Object^ sender, System::EventArgs^ e) {
+	double number1, number2;
+	if (double::TryParse(dtbox1->Text, number1) && double::TryParse(dtbox2->Text, number2))
+	{
+		Double ResultDbl = convertpartD(2);
+
+		String^ ResultStr;
+		ResultStr = Convert::ToString(ResultDbl);
+		dResultLabel->Text = "Result: " + ResultStr;
+	}
+	else
+	{
+		dResultLabel->Text = "Result: " + "Please give a valid value";
+	}
+}
+private: System::Void calcconj_Click(System::Object^ sender, System::EventArgs^ e) {
+	std::cout << "test conjugate";
 }
 };
 }
